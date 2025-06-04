@@ -1,0 +1,184 @@
+﻿1.1 Initial Prompt & Pseudocode
+Initial Prompt:
+"Design a CLI-based task manager application using only basic Python concepts from an introductory course, including simple lists and dictionaries, functions, while loops, and basic error handling. Provide structured pseudocode following course planning principles."
+AI Response:
+1. Start
+2. Define an empty list called tasks
+3. Define function add_task(task):
+   a. Append task to tasks
+   b. Display confirmation
+4. Define function remove_task(index):
+   a. Check if index is valid
+   b. If valid, remove task
+   c. Else, display error
+5. Define function list_tasks():
+   a. If tasks is empty, display message
+   b. Else, loop and display each task
+6. Define function display_menu():
+   a. Print options: Add, List, Remove, Exit
+7. Define main():
+   a. Use while loop for menu
+   b. Get user input
+   c. Call appropriate function based on choice
+   d. Loop until exit
+8. Call main(
+
+
+1.2 Two Prompt Refinements
+Refined Prompt:
+"Expand the CLI task manager pseudocode to include user input validation and a numbered menu system. Ensure all steps use logic from an introductory course, especially loops, functions, and input handling."
+AI Response:
+1. Start
+2. Define tasks as empty list
+3. Define add_task():
+   a. Prompt user for task input
+   b. Append to tasks
+   c. Print confirmation
+4. Define remove_task():
+   a. Prompt user for index
+   b. Validate index
+   c. If valid, delete task
+   d. Else, print error
+5. Define list_tasks():
+   a. If empty, print message
+   b. Else, print each task with number
+6. Define display_menu():
+   a. Print menu with 4 choices
+7. Define get_user_choice():
+   a. Prompt user for choice
+   b. Validate if between 1–4
+   c. Return valid choice
+8. Define main():
+   a. While True:
+     i. Show menu
+     ii. Get choice
+     iii. Call matching function
+     iv. If exit, break loop
+9. Call main()
+
+
+Second Refinement
+AI Response:
+1. Start
+2. tasks = []  # list to hold task strings
+3. Define add_task():
+   a. Ask user for task
+   b. Append to tasks
+   c. Print confirmation
+   # >>> add_task("Buy milk")
+   # Added: Buy milk
+4. Define remove_task():
+   a. Try:
+      i. Get index from user
+      ii. Convert to int
+      iii. If valid, remove task
+   b. Except:
+      i. Print error message
+5. Define list_tasks():
+   a. If empty, say "no tasks"
+   b. Else, enumerate and print all
+6. display_menu():
+   a. Print menu choices
+7. get_user_choice():
+   a. Try input, check if valid (1-4)
+8. main():
+   a. While True:
+      i. Show menu
+      ii. Get input
+      iii. Call correct function
+      iv. Break on exit
+
+
+2.1 Error Identification
+Prompt Used: "Can you help me identify and explain the errors in the following Python script for a task manager? Please use only beginner-level debugging strategies taught up to Week 6, such as checking spelling, variable usage, and function names."
+AI Response: Certainly! Here are the main issues in the code:
+1. Typo in variable name tas:
+   * Line: if index < len(tas):
+   * Issue: tas is undefined. The correct variable is tasks.
+2. Incorrect loop variable in list_tasks():
+   * Line: for i, t in enumerate(task):
+   * Issue: task is not defined in this function. The correct variable should be tasks.
+3. Misspelled function call list_task():
+   * Line: list_task()
+   * Issue: The defined function is list_tasks(), not list_task(
+2.2 Fix & Manual Rewrite
+Prompt Used: "Can you provide a corrected version of the broken task manager code using only beginner-level Python (Weeks 1–6) and include print statements for output testing? Also, provide simple doctest examples."
+AI Response: Absolutely! Here is the corrected version with inline comments and doctests
+# task_manager_fixed.py
+
+
+tasks = []
+
+
+def add_task(task):
+    """
+    Adds a task to the list
+
+
+    >>> add_task("Buy milk")
+    Added: Buy milk
+    """
+    tasks.append(task)
+    print(f"Added: {task}")
+
+
+def remove_task(index):
+    """
+    Removes a task by index
+
+
+    >>> remove_task(0)  # doctest: +SKIP
+    Removed: Buy milk
+    """
+    if index < len(tasks):
+        removed = tasks[index]
+        del tasks[index]
+        print(f"Removed: {removed}")
+    else:
+        print("Invalid index!")
+
+
+def list_tasks():
+    """
+    Lists all current tasks
+
+
+    >>> list_tasks()  # doctest: +SKIP
+    1: Buy milk
+    """
+    if not tasks:
+        print("No tasks available.")
+    else:
+        for i, t in enumerate(tasks):
+            print(f"{i+1}: {t}")
+
+
+def main():
+    add_task("Buy milk")
+    add_task("Pay bills")
+    add_task("Walk dog")
+    list_tasks()
+    remove_task(1)
+    list_tasks()
+
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+    main()
+3.1 Issue Analysis with Course Connection (6 marks)
+Prompt Used: "Review this function using only error handling techniques taught in an introductory programming course (basic try/except only). List all issues clearly."
+AI Response: Certainly! Here are three main issues in the safe_weather_data_fetch() function:
+1. Lack of Input Validation
+   * Problem: The function accepts any input, including an empty string or non-string types.
+   * Solution Reference: This violates principles from Week 6 – Input Validation, where we learned to check if the input is empty before proceeding.
+   * Fix: Add a check like if not city: before making the API call.
+2. Broad Except Without Feedback
+   * Problem: The function uses a general except: block but provides no user feedback or print message.
+   * Course Reference: Week 8 – Basic Exception Handling emphasized the use of meaningful error messages to aid debugging and clarity.
+   * Fix: Replace silent error handling with print("Error: Could not retrieve weather data") or similar.
+3. Assumes API Response Structure Without Check
+   * Problem: The function directly accesses nested data (data['current_condition'][0]['temp_C']) without checking if the keys exist.
+   * Solution Reference: Week 8 – JSON Structure and Try/Except Nesting highlighted wrapping risky nested lookups in an internal try/except block.
+   * Fix: Wrap the dictionary access in a nested try: block and provide fallback handling if the structure isn't as expected.
+Summary: This function needs stronger defensive programming through input validation (Week 6), more informative error messaging (Week 8), and safe data extraction practices using basic try/except (Week 8).
